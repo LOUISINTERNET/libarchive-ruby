@@ -1,7 +1,7 @@
 /****************************************************************************
-This file is part of libarchive-ruby. 
+This file is part of libarchive-ruby.
 
-libarchive-ruby is a Ruby binding for the C library libarchive. 
+libarchive-ruby is a Ruby binding for the C library libarchive.
 
 Copyright (C) 2011 Hans Mackowiak
 
@@ -159,6 +159,14 @@ VALUE _set_birthtime(VALUE self,VALUE value)
 }
 
 
+VALUE _get_size(VALUE self)
+{
+	if(archive_entry_size_is_set(_self))
+		return INT2NUM(archive_entry_size(_self));
+	else
+		return Qnil;
+}
+
 /*
  * call-seq:
  * entry <=> other -> -1,0,1 or nil
@@ -306,7 +314,7 @@ void Init_archive_entry(VALUE rb_cArchive){
 	rb_define_attr(rb_cArchiveEntry,"ctime",1,1);
 	rb_define_attr(rb_cArchiveEntry,"mtime",1,1);
 	rb_define_attr(rb_cArchiveEntry,"birthtime",1,1);
-	
+
 	rb_define_attr(rb_cArchiveEntry,"dev",1,1);
 	rb_define_attr(rb_cArchiveEntry,"devmajor",1,1);
 	rb_define_attr(rb_cArchiveEntry,"devminor",1,1);
@@ -314,8 +322,8 @@ void Init_archive_entry(VALUE rb_cArchive){
 	rb_define_attr(rb_cArchiveEntry,"rdev",1,1);
 	rb_define_attr(rb_cArchiveEntry,"rdevmajor",1,1);
 	rb_define_attr(rb_cArchiveEntry,"rdevminor",1,1);
-	
-	
+
+
 #endif
 
 	using namespace ArchiveEntry;
@@ -323,11 +331,12 @@ void Init_archive_entry(VALUE rb_cArchive){
 	rb_define_alloc_func(rb_cArchiveEntry,_alloc);
 	rb_define_private_method(rb_cArchiveEntry,"initialize_copy",RUBY_METHOD_FUNC(_initialize_copy),1);
 	rb_define_method(rb_cArchiveEntry,"inspect",RUBY_METHOD_FUNC(_inspect),0);
-	
+	rb_define_method(rb_cArchiveEntry,"size",RUBY_METHOD_FUNC(_get_size),0);
+
 	rb_define_attr_method(rb_cArchiveEntry,"path",_get_pathname,_set_pathname);
 	rb_define_attr_method(rb_cArchiveEntry,"symlink",_get_symlink,_set_symlink);
 	rb_define_attr_method(rb_cArchiveEntry,"hardlink",_get_hardlink,_set_hardlink);
-	
+
 	rb_define_method(rb_cArchiveEntry,"sourcepath",RUBY_METHOD_FUNC(ArchiveEntry_sourcepath),0);
 
 	rb_define_attr_method(rb_cArchiveEntry,"uid",_get_uid,_set_uid);
@@ -339,15 +348,15 @@ void Init_archive_entry(VALUE rb_cArchive){
 	rb_define_attr_method(rb_cArchiveEntry,"ctime",_get_ctime,_set_ctime);
 	rb_define_attr_method(rb_cArchiveEntry,"mtime",_get_mtime,_set_mtime);
 	rb_define_attr_method(rb_cArchiveEntry,"birthtime",_get_birthtime,_set_birthtime);
-	
+
 	rb_define_attr_method(rb_cArchiveEntry,"dev",_get_dev,_set_dev);
 	rb_define_attr_method(rb_cArchiveEntry,"dev_major",_get_devmajor,_set_devmajor);
 	rb_define_attr_method(rb_cArchiveEntry,"dev_minor",_get_devminor,_set_devminor);
-	
+
 	rb_define_attr_method(rb_cArchiveEntry,"rdev",_get_rdev,_set_rdev);
 	rb_define_attr_method(rb_cArchiveEntry,"rdev_major",_get_rdevmajor,_set_rdevmajor);
 	rb_define_attr_method(rb_cArchiveEntry,"rdev_minor",_get_rdevminor,_set_rdevminor);
-	
+
 	rb_define_method(rb_cArchiveEntry,"file?",RUBY_METHOD_FUNC(_is_file),0);
 	rb_define_method(rb_cArchiveEntry,"directory?",RUBY_METHOD_FUNC(_is_directory),0);
 	rb_define_method(rb_cArchiveEntry,"chardev?",RUBY_METHOD_FUNC(_is_chardev),0);
@@ -355,15 +364,15 @@ void Init_archive_entry(VALUE rb_cArchive){
 	rb_define_method(rb_cArchiveEntry,"symlink?",RUBY_METHOD_FUNC(_is_symlink),0);
 	rb_define_method(rb_cArchiveEntry,"pipe?",RUBY_METHOD_FUNC(_is_pipe),0);
 	rb_define_method(rb_cArchiveEntry,"socket?",RUBY_METHOD_FUNC(_is_socket),0);
-	
-	
+
+
 	rb_include_module(rb_cArchiveEntry,rb_mComparable);
 	rb_define_method(rb_cArchiveEntry,"<=>",RUBY_METHOD_FUNC(_compare),1);
-	
+
 	rb_define_alias(rb_cArchiveEntry,"to_s","path");
-//*	
+//*
 	rb_define_method(rb_cArchiveEntry,"access_acl",RUBY_METHOD_FUNC(ArchiveEntry_access_acl),0);
 //*/
-	
+
 
 }
