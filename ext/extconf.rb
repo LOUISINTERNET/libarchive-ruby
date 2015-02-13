@@ -1,8 +1,8 @@
 #Encoding: UTF-8
 =begin
-This file is part of libarchive-ruby.
+This file is part of libarchive-ruby. 
 
-libarchive-ruby is a Ruby binding for the C library libarchive.
+libarchive-ruby is a Ruby binding for the C library libarchive. 
 
 Copyright © 2011 Hans Mackowiak
 
@@ -42,8 +42,6 @@ dir_config("archive")
 	have_func("archive_read_support_format_raw","archive.h")
 
 $CFLAGS += "-x c++ -Wall"
-$CPPFLAGS += "#{ARGV[0]}"
-$LDFLAGS += "#{ARGV[1]}"
 
 
 create_header
