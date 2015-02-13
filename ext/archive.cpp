@@ -1787,15 +1787,4 @@ extern "C" void Init_archive(void){
 
 	fileExt[".tar"]=std::make_pair(ARCHIVE_FORMAT_TAR,ARCHIVE_FILTER_NONE);
 
-
-	DataVector data;
-//	//RubyArchive::read_data_from_path2(rb_reg_new(".",8,0),Qnil,data);
-	RubyArchive::read_data_from_path2(rb_str_new2("*/*.cpp"),Qnil,data);
-	rb_warn("%lu",data.size());
-////
-	for(size_t i = 0; i < data.size(); ++i)
-	{
-		rb_warn("%s",archive_entry_pathname(data[i].first));
-		rb_warn("%lu",data[i].second.size());
-	}
 }
