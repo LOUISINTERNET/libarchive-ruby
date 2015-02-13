@@ -1578,6 +1578,18 @@ VALUE Archive_stat(VALUE self)
 	return rb_funcall(rb_cFile,rb_intern("stat"),1,Archive_path(self));
 }
 
+/*:nodoc:
+ * call-seq:
+ * archive.size -> File
+ *
+ * call the File.size(path)
+*/
+
+VALUE Archive_size(VALUE self)
+{
+	return rb_funcall(rb_cFile,rb_intern("size"),1,Archive_path(self));
+}
+
 /*
  * call-seq:
  *   archive.inspect -> String
@@ -1715,7 +1727,7 @@ extern "C" void Init_archive(void){
 	rb_define_method(rb_cArchive,"stat",RUBY_METHOD_FUNC(Archive_stat),0);
 
 	rb_include_module(rb_cArchive,rb_mEnumerable);
-	//rb_define_method(rb_cArchive,"size",RUBY_METHOD_FUNC(Archive_size),0);
+	rb_define_method(rb_cArchive,"size",RUBY_METHOD_FUNC(Archive_size),0);
 
 	Init_archive_entry(rb_cArchive);
 
