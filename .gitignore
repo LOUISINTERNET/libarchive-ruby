@@ -5,6 +5,7 @@ pkg/
 # Ignore compilation products
 *.o
 *.so
+*.bundle
 
 #eclipse project files
 .cproject
